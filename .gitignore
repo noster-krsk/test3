@@ -1,0 +1,8 @@
+# служебные файлы ISPConfig
+/error/
+/stats/
+/favicon.ico
+/robots.txt
+/standard_index.html
+.env
+*.sqlite
