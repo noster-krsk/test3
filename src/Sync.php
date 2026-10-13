@@ -10,13 +10,17 @@ final class Sync
     {
     }
 
-    /** Приводит телефон к +7XXXXXXXXXX; null — если номер не сводится к 11 цифрам. */
+    /** Приводит телефон к +7XXXXXXXXXX; null — если номер не сводится к 11 цифрам (7/8 + 10 цифр или 9 + 9 цифр). */
     public static function normalizePhone(mixed $phone): ?string
     {
         if (!is_string($phone) && !is_int($phone)) {
             return null;
         }
         $digits = preg_replace('/\D+/', '', (string)$phone);
+        // 10 цифр с 9 в начале — мобильный без кода страны, дописываем 7
+        if (strlen($digits) === 10 && $digits[0] === '9') {
+            $digits = '7' . $digits;
+        }
         if (strlen($digits) !== 11 || ($digits[0] !== '7' && $digits[0] !== '8')) {
             return null;
         }
